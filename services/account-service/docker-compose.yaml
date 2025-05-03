@@ -1,0 +1,79 @@
+version: "3.9"
+
+services:
+  # ----------------------------------------
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports: [ "5673:5672", "15672:15672" ]   # host ports, 5672 is free now
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      retries: 5
+
+  # ----------------------------------------
+  mysql-account:
+    image: mysql:8.3
+    container_name: mysql-account
+    ports: [ "3307:3306" ]                  # <- 3306 already used on the host
+    environment:
+      MYSQL_DATABASE: account_schema
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootroot
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      retries: 5
+
+  # ----------------------------------------
+  account-service:
+    build:
+      context: ../account-service          # <‑‑ path to that repo
+      dockerfile: Dockerfile
+    depends_on:
+      rabbitmq: { condition: service_healthy }
+      mysql-account: { condition: service_healthy }
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-account:3306/accountdb?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: account
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_RABBITMQ_HOST: rabbitmq
+    ports: [ "8282:8282" ]
+
+  # ========================================
+  #  ➜  NEW: Customer‑Service container
+  # ========================================
+  mysql-customer:
+    image: mysql:8.3
+    container_name: mysql-customer
+    ports: [ "3308:3306" ]                  # another free port
+    environment:
+      MYSQL_DATABASE: customerdb
+      MYSQL_USER: customer
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      retries: 5
+
+  customer-service:
+    build:
+      # ✱ OPTION A – local folder
+      context: ../customer-service
+      dockerfile: Dockerfile
+      # ✱ OPTION B – direct from Git (uncomment instead of OPTION A)
+      # context: https://github.com/your‑org/customer-service.git
+    depends_on:
+      rabbitmq: { condition: service_healthy }
+      mysql-customer: { condition: service_healthy }
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-customer:3306/customerdb?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: customer
+      SPRING_DATASOURCE_PASSWORD: secret
+      SPRING_RABBITMQ_HOST: rabbitmq
+    ports: [ "8181:8080" ]                  # expose customer API
+
+networks:
+  default:
+    name: ms‑network                         # optional – keeps names readable

@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.3
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: account_schema
+      MYSQL_ROOT_PASSWORD: rootroot
+    ports:
+      - "3306:3306"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  account-service:
+    build: .
+    depends_on:
+      - mysql
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/account_schema?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootroot
+      RABBIT_HOST: rabbitmq
+      RABBIT_USERNAME: guest
+      RABBIT_PASSWORD: guest
+      SERVER_PORT: 8282
+    ports:
+      - "8282:8282"
+    volumes:
+      - ./src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
