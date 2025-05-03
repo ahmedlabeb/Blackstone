@@ -1,7 +1,7 @@
 
 package com.blackstone.customer.boundry.controller;
 
-import com.blackstone.customer.dto.CustomerDto;
+import com.blackstone.customer.entity.dto.CustomerDto;
 import com.blackstone.customer.control.service.CustomerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;

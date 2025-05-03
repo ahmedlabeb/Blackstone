@@ -1,6 +1,6 @@
 package com.blackstone.customer.common.mapper;
 
-import com.blackstone.customer.dto.CustomerDto;
+import com.blackstone.customer.entity.dto.CustomerDto;
 import com.blackstone.customer.entity.domain.Customer;
 import org.mapstruct.*;
 

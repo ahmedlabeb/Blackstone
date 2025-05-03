@@ -1,5 +1,5 @@
 
-package com.blackstone.customer.dto;
+package com.blackstone.customer.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

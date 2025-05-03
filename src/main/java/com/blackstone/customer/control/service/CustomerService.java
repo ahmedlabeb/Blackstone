@@ -2,7 +2,7 @@
 package com.blackstone.customer.control.service;
 
 import com.blackstone.customer.common.exception.CustomerServiceError;
-import com.blackstone.customer.dto.CustomerDto;
+import com.blackstone.customer.entity.dto.CustomerDto;
 import com.blackstone.customer.control.integration.AccountServiceClient;
 import com.blackstone.customer.entity.domain.Customer;
 import com.blackstone.customer.entity.messaging.producer.events.CustomerCreatedEvent;

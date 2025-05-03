@@ -1,7 +1,7 @@
 
 package com.blackstone.customer.entity.domain;
 
-import com.blackstone.customer.dto.CustomerType;
+import com.blackstone.customer.entity.dto.CustomerType;
 import jakarta.persistence.*;
 import lombok.*;
 

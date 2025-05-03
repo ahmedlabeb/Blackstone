@@ -1,4 +1,4 @@
-package com.blackstone.customer.dto;
+package com.blackstone.customer.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

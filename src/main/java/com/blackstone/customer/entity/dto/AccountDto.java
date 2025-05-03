@@ -1,5 +1,5 @@
 
-package com.blackstone.customer.dto;
+package com.blackstone.customer.entity.dto;
 
 import lombok.Data;
 
