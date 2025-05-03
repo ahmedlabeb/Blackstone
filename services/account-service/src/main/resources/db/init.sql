@@ -1,6 +1,13 @@
 CREATE DATABASE IF NOT EXISTS account_schema;
 USE account_schema;
 
+CREATE TABLE `customer_info` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customer_id` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `account` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `account_id` varchar(10) NOT NULL,
@@ -14,11 +21,4 @@ CREATE TABLE `account` (
   UNIQUE KEY `unique_account` (`account_id`),
   KEY `idx_customer_id` (`customer_id`)
 );
-
-CREATE TABLE `customer_info` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `customer_id` varchar(255) DEFAULT NULL,
-  `type` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
