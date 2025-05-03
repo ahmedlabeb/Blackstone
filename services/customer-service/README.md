@@ -96,15 +96,30 @@ java -jar target/customer-service-0.0.1-SNAPSHOT.jar
 ```
 
 *Environment variables* (override `application.yml`): `SPRING_DATASOURCE_URL`, `RABBIT_HOST`, `RABBIT_USERNAME`, `RABBIT_PASSWORD`.
+## 🚢 Running the services with Docker Compose
+
+### Prerequisites
+| Tool | Version (minimum) | Notes |
+|------|-------------------|-------|
+| Docker Engine / Desktop | 24.x | Make sure the **“File sharing”** list in Docker Desktop → *Settings → Resources* contains the path to this repository so the SQL files can be mounted into MySQL. |
+| Docker Compose | v2 (bundled with Docker Desktop) | We use the *Compose V2* CLI (`docker compose …`). |
 
 ---
+
+### 1 — Quick start 🟢
+
+
+### from the repository root
+### docker compose up -d
+
+
 
 ## Tests & Coverage
 
 ```bash
 mvn test
 open target/site/jacoco/index.html   # view HTML report
-```
+
 
 Unit tests cover controllers, services, event processors, and DTO validation (≥ 90 % lines).
 

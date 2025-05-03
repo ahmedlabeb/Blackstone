@@ -90,6 +90,21 @@ mvn clean verify
 # run (requires MySQL + RabbitMQ running with creds in application.yml)
 java -jar target/account-service-0.0.1-SNAPSHOT.jar
 ````
+## 🚢 Running the services with Docker Compose
+ 
+### Prerequisites
+| Tool | Version (minimum) | Notes |
+|------|-------------------|-------|
+| Docker Engine / Desktop | 24.x | Make sure the **“File sharing”** list in Docker Desktop → *Settings → Resources* contains the path to this repository so the SQL files can be mounted into MySQL. |
+| Docker Compose | v2 (bundled with Docker Desktop) | We use the *Compose V2* CLI (`docker compose …`). |
+
+---
+
+### 1 — Quick start 🟢
+
+```bash
+# from the repository root
+docker compose up -d
 
 *Environment overrides*: `SPRING_DATASOURCE_URL`, `RABBIT_HOST`, `RABBIT_USERNAME`, `RABBIT_PASSWORD`.
 
