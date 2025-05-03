@@ -19,7 +19,7 @@ spring:
       created: customer.created
       updated: customer.updated
       deleted: customer.deleted
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
